@@ -1,5 +1,6 @@
 #ifndef __Photo__H
 #define __Photo__H
+// #pragma once
 #include <string>
 class Photo{
     int Photo_num;        //照片编号

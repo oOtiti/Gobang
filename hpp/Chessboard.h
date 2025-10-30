@@ -1,5 +1,6 @@
 #ifndef __Chessboard__H
 #define __Chessboard__H
+// #pragma once
 class Chessboard {
 private:
     int width,height;   //宽高

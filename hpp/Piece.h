@@ -1,5 +1,6 @@
 #ifndef __Piece__H
 #define __Piece__H
+// #pragma once
 #include <string>
 class Piece{
 private:

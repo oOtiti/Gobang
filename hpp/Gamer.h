@@ -1,5 +1,6 @@
 #ifndef __Gamer__H
 #define __Gamer__H
+// #pragma once
 #include <string>
 class Gamer{
     std :: string name,ID;  //姓名，玩家ID
