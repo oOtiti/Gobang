@@ -1,7 +1,8 @@
 #include "Chessboard.h"
 #include <iostream>
 
-Chessboard :: Chessboard(int _width, int _height, int _step,bool _status, std ::vector<std :: vector<int>> _board, std ::vector<Piece> _pieces) : width(_width) , height(_height) ,step(_step), status(_status) ,board(_board), pieces(_pieces) {};
+Chessboard :: Chessboard(int _width, int _height, int _step,bool _status, std ::vector<std :: vector<int>> _board, std ::vector<Piece> _pieces) 
+    : width(_width) , height(_height) ,step(_step), status(_status) ,board(_board), pieces(_pieces) {};
 
 void Chessboard :: init (const int& w,const int& h) {
     this -> height=h;

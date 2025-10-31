@@ -7,6 +7,7 @@ private:
     std ::  string  color;            //颜色
     int x,y,id;                           //位置，步序
     bool highlight;                 //是否为高光
+    
 public :
     Piece(std :: string _c="W",int _x=0, int _y=0,int _id=0, bool _h=0);
     void set_key();                 //设置为高光

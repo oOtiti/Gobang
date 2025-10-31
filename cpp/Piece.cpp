@@ -1,6 +1,7 @@
 #include "Piece.h"
 
-Piece :: Piece (std ::string _c , int _x , int _y, int _id, bool _h) : color(_c) , x(_x) ,y(_y) , id(_id) ,highlight(_h) {};
+Piece :: Piece (std ::string _c , int _x , int _y, int _id, bool _h) 
+    : color(_c) , x(_x) ,y(_y) , id(_id) ,highlight(_h) {};
 
 void Piece :: set_key () {
     if(this->highlight) return;

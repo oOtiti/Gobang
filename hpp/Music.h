@@ -15,6 +15,7 @@ private:
     std :: vector<std ::string> Path_arr;     //存路径
     int tot;                                                  //总歌曲数
     int cur;                                                 //当前
+    
 public:
     Music (std :: string _name="RAP" ,std :: string _Path=" ", int _Music_num=0, bool _status=0, int _set0=0,bool _loop=false,
     std ::vector<std :: string> _Path_arr ,int _tot=0, int _cur=0);

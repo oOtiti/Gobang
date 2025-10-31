@@ -2,15 +2,25 @@
 #define __Gamer__H
 // #pragma once
 #include <string>
+#include <vector>
+#include <map>
+
 class Gamer{
 private:
-    std :: string name,ID;  //姓名，玩家ID
-    int rank,done_num;    //段位，已经下过步数
-    std :: string belongto;         //阵营
+    int tot;                                                     //总在线玩家
+    std :: vector<int> rank;                           //分数
+    std :: vector<int> step;                           //步数
+    std :: vector<std :: string> name;           //玩家名字列表
+    std :: vector<std :: string> color;            //玩家对应颜色
+    std :: map<std :: string, int>table;          //对应颜色表
+
 public:
-    Gamer(std :: string _name="Tim", std :: string _ID=0, int _rank=0, int _done_num=0, std :: string _belongto="W") ;
-    void login();//登录
-    void logout();//退出
-    void change();//改变阵营
+    Gamer(int _tot, std :: vector<int> _rank, std :: vector<int> _step,  std :: vector<std :: string> _name ,std :: vector<std :: string> _color,
+    std :: map<std :: string, int> _table);
+    void login();                     //登录
+    void logout();                  //退出
+    int get_tot() const;          //总数
+    void change(const int&);//改变颜色
+    bool check(const std :: string&) const;          //检查是否有颜色
 };
 #endif
