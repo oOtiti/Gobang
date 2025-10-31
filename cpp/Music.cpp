@@ -19,21 +19,30 @@ void Music :: turn_on ( const std :: string& path ,const int& to) {
 }
 
 void Music :: turn_off () {
+    if(!(this->status)) return; 
     std::string pauseCmd = "pause " + this->name;
+    std::string closeCmd = "close " + this->name;
     mciSendStringA(pauseCmd.c_str(),NULL ,0,NULL);
+    mciSendStringA(closeCmd.c_str(), NULL, 0,NULL);
 }
 
 void Music :: last () {
+    if(this->status)
+        this->turn_off();
     int need=((*this).cur-1+(*this).tot)%(*this).tot;
     this->turn_on(this->Path_arr[need],need);
 }
 
 void Music :: next () {
+    if(this->status)
+        this->turn_off();
     int need=((*this).cur+1)%(*this).tot;
     this->turn_on(this->Path_arr[need],need);
 }
 
 void Music :: change_to (const int& to) {
+    if(this->status)
+        this->turn_off();
     if(to<0||to>this->tot){std :: cout<< "ERROR : NO MUSIC!"<<std ::endl;}
     this->turn_on(this->Path_arr[to],to);
 }

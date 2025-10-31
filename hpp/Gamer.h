@@ -3,6 +3,7 @@
 // #pragma once
 #include <string>
 class Gamer{
+private:
     std :: string name,ID;  //姓名，玩家ID
     int rank,done_num;    //段位，已经下过步数
     std :: string belongto;         //阵营
