@@ -4,6 +4,7 @@
 #include <vector>
 #include "Piece.h"
 
+
 class Chessboard {
 private:
     int width,height;   //宽高
