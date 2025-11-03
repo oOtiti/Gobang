@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include<iostream>
 #include<graphics.h>
 
 using namespace std;
