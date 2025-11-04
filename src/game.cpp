@@ -1,5 +1,5 @@
-#include<iostream>
-#include<graphics.h>
+﻿#include<iostream>
+
 
 using namespace std;
 #define ll std:: long long
