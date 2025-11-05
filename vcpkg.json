@@ -1,5 +1,8 @@
 {
   "dependencies": [
-    "sfml"
+    {
+      "name": "sfml",
+      "features": ["audio", "network"]
+    }
   ]
 }
