@@ -3,6 +3,7 @@
 #include "Music.h"
 #include "Photo.h"
 #include "Piece.h"
+#include "Button.h"
 #include <vector>
 #include <functional>
 #include "Chessboard.h"
@@ -14,13 +15,14 @@ using namespace std;
 Music music;
 Photo photo;
 Chessboard chessboard;
+Button Gamer1(800,0,500,100,"Gamer1 name :",sf::Color::White,"./arial.ttf"),Gamer2(800,225,500,100,"Gamer2 name :",sf::Color::White,"./arial.ttf");
+Button Rank1(800,100,500,50,"0",sf::Color::White,"./arial.ttf"),Rank2(800,175,500,50,"0",sf::Color::White,"./arial.ttf");
 int main(void) {
     cout << "Welcome to Gobang Game!" << endl;
-    cout <<"Now,The Board is 1300*800"<< endl;
+    cout <<"Now,The Board is 1300*800 60Hz!"<< endl;
     //实例化窗口，刷新率60hz
     RenderWindow window(VideoMode({1300, 800}), "My window");
     window.setFramerateLimit(60); 
-    
     
     Texture photo("./T1.jpg");
 
@@ -33,21 +35,6 @@ int main(void) {
     SecBoard.setPosition({800.f,0.f});
     SecBoard.setFillColor(Color::White);
 
-    //玩家显示面板
-    sf::Font font;
-    if (!font.openFromFile("./arial.ttf")){
-        cout<<"ERROR!YOUR FONT FALSE!"<<endl;
-        return 0;
-    }
-    Text Gamer1(font);
-    Text Gamer2(font);
-    Gamer1.setString("Gamer1 name:");
-    Gamer2.setString("Gamer2 name:");
-    Gamer1.setPosition({800.f,100.f});
-    Gamer2.setPosition({800.f,200.f});
-    Gamer1.setFillColor(Color::Blue);
-    Gamer2.setFillColor(Color::Blue);
-    
 
     //棋盘的框架按照800*800制作
     sf::VertexArray ys(sf::PrimitiveType::Lines,4*8);
@@ -99,8 +86,20 @@ int main(void) {
         window.draw(SecBoard);
         window.draw(ys);
         window.draw(xs);
-        window.draw(Gamer1);
-        window.draw(Gamer2);
+        function<void()> Gamers=[&]()->void
+        {
+            window.draw(Gamer1.get_shape());
+            window.draw(Gamer1.get_text());
+            window.draw(Rank1.get_shape());
+            window.draw(Rank1.get_text());
+            window.draw(Gamer2.get_shape());
+            window.draw(Gamer2.get_text());
+            window.draw(Rank2.get_shape());
+            window.draw(Rank2.get_text());
+        };
+        Gamers();
+
+
 
         window.display();
     }
