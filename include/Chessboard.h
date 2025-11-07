@@ -14,7 +14,7 @@ private:
     std :: vector<std :: vector<int>> board; //棋盘
   
 public:
-    Chessboard(int _width=100, int _height=100 ,int _step=0, bool _status=0, std :: vector<std :: vector<int>> _board, std :: vector<Piece> _pieces);
+    Chessboard(int _width=100, int _height=100 ,int _step=0, bool _status=0, std :: vector<std :: vector<int>> _board=std :: vector<std :: vector<int>>(10,std ::vector<int>()), std :: vector<Piece> _pieces=std ::vector<Piece>());
     void ban();                              //封盘
     void unban();                          //开盘
     void init(const int& width,const int& height) ;              //初始化

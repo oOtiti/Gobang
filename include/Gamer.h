@@ -15,8 +15,8 @@ private:
     std :: map<std :: string, int>table;          //对应颜色表
 
 public:
-    Gamer(int _tot, std :: vector<int> _rank, std :: vector<int> _step,  std :: vector<std :: string> _name ,std :: vector<std :: string> _color,
-    std :: map<std :: string, int> _table);
+    Gamer(int _tot, std :: vector<int> _rank=std ::vector<int>(), std :: vector<int> _step=std :: vector<int>(),  std :: vector<std :: string> _name=std ::vector<std :: string >() ,std :: vector<std :: string> _color=std ::vector<std ::string >(),
+    std :: map<std :: string, int> _table=std :: map<std :: string, int>());
     void login();                     //登录
     void logout();                  //退出
     int get_tot() const;          //总数

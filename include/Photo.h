@@ -14,7 +14,7 @@ private:
     std :: vector<std :: string> Path_arr; //照片数组
                
 public:
-    Photo(int _Photo_num=0, std :: string _Path=" ", bool _status=0,int _set0=0, int _tot=0, std :: vector<std :: string >_Path_arr) ;
+    Photo(int _Photo_num=0, std :: string _Path=" ", bool _status=0,int _set0=0, int _tot=0, std :: vector<std :: string >_Path_arr=std :: vector<std :: string>()); ;
     void open_photo(); //打开背景
     void close_photo(); //关闭背景
     void last();               //上一个背景

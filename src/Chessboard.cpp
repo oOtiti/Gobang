@@ -1,5 +1,7 @@
 #include "Chessboard.h"
 #include <iostream>
+
+
 Chessboard :: Chessboard(int _width, int _height, int _step,bool _status, std ::vector<std :: vector<int>> _board, std ::vector<Piece> _pieces) 
     : width(_width) , height(_height) ,step(_step), status(_status) ,board(_board), pieces(_pieces) {};
 
@@ -7,10 +9,9 @@ void Chessboard :: init (const int& w,const int& h) {
     std :: cout << "new game w ,h " << w <<' '<<h<<std :: endl;
     this -> height=h;
     this -> width =w;
-    this ->step=0;
-    this ->pieces.clear();
+    this -> step=0;
+    this -> pieces.clear();
     this -> board=std :: vector<std :: vector<int>> (h,std :: vector<int> (w,0)); 
-    initgraph(1000,1000);
 }
 
 void  Chessboard :: ban () {

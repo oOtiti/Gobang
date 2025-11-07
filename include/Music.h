@@ -18,7 +18,7 @@ private:
     
 public:
     Music (std :: string _name="RAP" ,std :: string _Path=" ", int _Music_num=0, bool _status=0, int _set0=0,bool _loop=false,
-    std ::vector<std :: string> _Path_arr ,int _tot=0, int _cur=0);
+    std ::vector<std :: string> _Path_arr=std :: vector<std :: string>() ,int _tot=0, int _cur=0);
     void push_music(const std :: string&); //添加音乐
     void pop_music();        //删除音乐
     void show() const;       //展示现在的音乐
