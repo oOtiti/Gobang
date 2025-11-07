@@ -13,12 +13,12 @@ void Piece :: unset_key () {
     this -> highlight=0;
 }
 
-int Piece :: get_x () const {
+const int& Piece :: get_x () const {
     
     return (*this).x;
 }
 
-int Piece :: get_y () const {
+const int& Piece :: get_y () const {
     return (*this).y;
 }
 

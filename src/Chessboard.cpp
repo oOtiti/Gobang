@@ -22,7 +22,7 @@ void Chessboard :: unban () {
     this->status=1;
 }
 
-bool Chessboard :: check_xy (const Piece& piece) const{
+const bool Chessboard :: check_xy (const Piece& piece) const{
     int x=piece.get_x();
     int y=piece.get_y();
 
@@ -30,7 +30,7 @@ bool Chessboard :: check_xy (const Piece& piece) const{
     return true;
 }
 
-bool Chessboard :: check_win (const Piece& piece) const {
+const bool Chessboard :: check_win (const Piece& piece) const {
     int x=piece.get_x();
     int y=piece.get_y();
     std :: string color=piece.get_color();

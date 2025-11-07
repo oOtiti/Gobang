@@ -16,6 +16,7 @@ void Music :: turn_on ( const std :: string& path ,const int& to) {
     this->cur=to;
     this->status=true;
     mciSendStringA(playCmd.c_str(),NULL ,0,NULL);
+    std :: cout<<"MUSIC START!"<<std :: endl;
 }
 
 void Music :: turn_off () {
@@ -24,6 +25,10 @@ void Music :: turn_off () {
     std::string closeCmd = "close " + this->name;
     mciSendStringA(pauseCmd.c_str(),NULL ,0,NULL);
     mciSendStringA(closeCmd.c_str(), NULL, 0,NULL);
+}
+
+const std :: string Music ::get_Path (const int& to) const {
+    return this->Path_arr[to];
 }
 
 void Music :: last () {
@@ -63,12 +68,13 @@ void Music :: pop_music () {
     (*this).Path_arr.pop_back();
     (*this).tot--;
 }
+
 void Music :: show () const {
     if((*this).Path_arr.empty()){std :: cout << "NO MUSCI!"<<std :: endl; }
     else
     {
-            std :: cout<<"---------------------MUSIC TABLE---------------------" << std :: endl;
-        for(int i=0; i<=(*this).tot; i++)
+        std :: cout<<"---------------------MUSIC TABLE---------------------" << std :: endl;
+        for(int i=0; i<(*this).tot; i++)
             std :: cout << i+1<< ". is "<< (*this).Path_arr[i]<<std :: endl;
     }
     std :: cout<< "music now is"<<((*this).status?"open":"close")<< std ::endl;

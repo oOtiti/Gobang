@@ -28,5 +28,6 @@ public:
     void change_to(const int&);         //切换到index编号音乐
     void change_set0(const int&);      //改变默认音乐
     void turn_on(const std :: string& path ,const int&) ;             //打开音乐
+    const std :: string get_Path(const int&) const;
 };
 #endif

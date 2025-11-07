@@ -5,7 +5,7 @@ Gamer:: Gamer (int _tot, std :: vector<int> _rank, std :: vector<int> _step, std
 std :: map<std :: string, int> _table)
     : tot(_tot), rank (_rank) , step(_step), name(_name) ,color(_color) ,table(_table) {};
 
-int Gamer :: get_tot () const {
+const int& Gamer :: get_tot () const {
     return this ->tot;
 }
 void Gamer :: login () {
@@ -46,7 +46,7 @@ void Gamer :: change (const int& id) {
     this->color[id]=tmp;
 }
 
-bool Gamer :: check(const std :: string& cur) const{
+const bool Gamer :: check(const std :: string& cur) const{
     if(this->table.count(cur))
         return true;
     return false;

@@ -19,8 +19,8 @@ public:
     void unban();                          //开盘
     void init(const int& width,const int& height) ;              //初始化
     void inplace(const Piece& piece) ;                       //放置棋子         
-    bool check_xy (const Piece& piece) const;         //判越界
-    bool check_win(const Piece& piece) const;        //判胜利
+    const bool check_xy (const Piece& piece) const;         //判越界
+    const bool check_win(const Piece& piece) const;        //判胜利
     
 };
 #endif

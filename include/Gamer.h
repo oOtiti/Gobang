@@ -19,8 +19,8 @@ public:
     std :: map<std :: string, int> _table=std :: map<std :: string, int>());
     void login();                     //登录
     void logout();                  //退出
-    int get_tot() const;          //总数
+    const int& get_tot() const;          //总数
     void change(const int&);//改变颜色
-    bool check(const std :: string&) const;          //检查是否有颜色
+    const bool check(const std :: string&) const;          //检查是否有颜色
 };
 #endif
