@@ -27,8 +27,6 @@ void Button :: update () {
     {
         this->shape.setFillColor(sf :: Color ::White);
     }
-    onbutton=0;
-    clickbutton=0;
 }
 
 void Button :: set_font (const std :: string& fonts) {
@@ -54,4 +52,28 @@ const sf::RectangleShape& Button :: get_shape () const {
 
 const sf::Text& Button :: get_text () const {
     return this->text;
+}
+
+bool Button :: isMouseOver(const sf::RenderWindow& window) {
+        sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+        return this->shape.getGlobalBounds().contains(mousePos);
+    }
+
+bool Button::handleEvent(const std::optional<sf::Event>& event, const sf::RenderWindow& window) {
+    if (event->is<sf::Event::MouseMoved>()) {
+        this->onbutton = isMouseOver(window);
+    }
+    else if (event->is<sf::Event::MouseButtonPressed>()&&sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+        if (isMouseOver(window)) {
+            this->clickbutton = true;
+        }
+    }
+    else if (event->is<sf::Event::MouseButtonReleased>() && !sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+        if (this->clickbutton && isMouseOver(window)) {
+            this->clickbutton = false;
+            return true;  
+        }
+        this->clickbutton = false;
+    }
+    return false;
 }

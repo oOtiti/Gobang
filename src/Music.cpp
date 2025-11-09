@@ -8,7 +8,8 @@ Music :: Music(std :: string _name ,std ::string _Path ,int _Music_num, bool _st
 std :: vector <std ::string> _Path_arr , int _tot ,int _cur)
     :name(_name), Path(_Path) , Music_num(_Music_num) , status(_status), set0(_set0), loop(_loop) ,Path_arr(_Path_arr), tot(_tot), cur(_cur){ };
 
-void Music :: turn_on ( const std :: string& path ,const int& to) {
+void Music :: turn_on (const int& to) {
+    auto path=this->get_Path(to);
     std::string openCmd = "open \"" + path + "\" alias " + this->name;
     std::string playCmd = "play " + this->name;
     MCIERROR err=mciSendStringA(openCmd.c_str(),NULL, 0 ,NULL);
@@ -28,6 +29,7 @@ void Music :: turn_off () {
 }
 
 const std :: string Music ::get_Path (const int& to) const {
+    if(to<0 || to>=this->Path_arr.size()) {std :: cout<<"ERROR MUSIC MISTKAE!"<<std ::endl;return " ";}
     return this->Path_arr[to];
 }
 
@@ -35,21 +37,21 @@ void Music :: last () {
     if(this->status)
         this->turn_off();
     int need=((*this).cur-1+(*this).tot)%(*this).tot;
-    this->turn_on(this->Path_arr[need],need);
+    this->turn_on(need);
 }
 
 void Music :: next () {
     if(this->status)
         this->turn_off();
     int need=((*this).cur+1)%(*this).tot;
-    this->turn_on(this->Path_arr[need],need);
+    this->turn_on(need);
 }
 
 void Music :: change_to (const int& to) {
     if(this->status)
         this->turn_off();
     if(to<0||to>this->tot){std :: cout<< "ERROR : NO MUSIC!"<<std ::endl;}
-    this->turn_on(this->Path_arr[to],to);
+    this->turn_on(to);
 }
 
 void Music :: change_set0 (const int& num) {

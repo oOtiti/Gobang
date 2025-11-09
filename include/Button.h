@@ -23,6 +23,7 @@ public:
     const std:: string show_text () const;
     const sf::RectangleShape& get_shape () const;
     const sf::Text& get_text () const;
-
+    bool isMouseOver(const sf::RenderWindow& window);
+    bool handleEvent(const std::optional<sf::Event>& event, const sf::RenderWindow& window);
 };
 #endif

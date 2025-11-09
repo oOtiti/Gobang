@@ -12,23 +12,212 @@
 #include <SFML/Graphics/PrimitiveType.hpp>
 using namespace sf;
 using namespace std;
+int opt,popt,mopt;
 Music music;
 Photo photo;
 Chessboard chessboard;
 Button Gamer1(800,0,500,100,"Gamer1 name :",sf::Color::White,"./arial.ttf"),Gamer2(800,225,500,100,"Gamer2 name :",sf::Color::White,"./arial.ttf");
-Button Rank1(800,100,500,50,"0",sf::Color::White,"./arial.ttf"),Rank2(800,175,500,50,"0",sf::Color::White,"./arial.ttf");
-int main(void) {
+Button Rank1(800,100,500,50,"Rank:0",sf::Color::White,"./arial.ttf"),Rank2(800,175,500,50,"Rank:0",sf::Color::White,"./arial.ttf");
+void menu_print()
+{
     cout << "Welcome to Gobang Game!" << endl;
-    cout <<"Now,The Board is 1300*800 60Hz!"<< endl;
+    cout << "What do you want to do?" << endl;
+    cout << "-----------------------" << endl;
+    cout << "---------1.Game--------" << endl;
+    cout << "---------2.Phtot-------" << endl;
+    cout << "---------3.Music-------" << endl;
+    cout << "-----------------------" << endl;
+}
+void Photo_print()
+{
+    cout << "-----------------------" << endl;
+    cout << "---------1.open--------" << endl;
+    cout << "---------2.close-------" << endl;
+    cout << "---------3.last--------" << endl;
+    cout << "---------4.next--------" << endl;
+    cout << "---------5.show--------" << endl;
+    cout << "---------6.change_to---" << endl;
+    cout << "---------7.push--------" << endl;
+    cout << "---------8.pop---------" << endl;
+    cout << "---------9.change_set0-" << endl;
+    cout << "---------10.quit-------" << endl;
+    cout << "-----------------------" << endl;
+}
+void Music_print()
+{
+    cout << "-----------------------" << endl;
+    cout << "---------1.open--------" << endl;
+    cout << "---------2.close-------" << endl;
+    cout << "---------3.last--------" << endl;
+    cout << "---------4.next--------" << endl;
+    cout << "---------5.show--------" << endl;
+    cout << "---------6.change_to---" << endl;
+    cout << "---------7.push--------" << endl;
+    cout << "---------8.pop---------" << endl;
+    cout << "---------9.change_set0-" << endl;
+    cout << "---------10.quit-------" << endl;
+    cout << "-----------------------" << endl;
+}
+void Error_output()
+{
+    cout << "NO Selection! Try again!" << endl;
+}
+void Psetting (const int& popt)
+{
+    switch (popt){
+        case 1:{
+            photo.open_photo();
+            break;
+        }
+        case 2:{
+            photo.close_photo();
+            break;
+        }
+        case 3:{
+            photo.last();
+            break;
+        }
+        case 4:{
+            photo.next();
+            break;
+        }
+        case 5:{
+            photo.show();
+            break;
+        }
+        case 6:{
+            cout<<"input your photo id!"<<endl;
+            int o;cin>>o;
+            photo.change_to(o-1);
+            break;
+        }
+        case 7:{
+            cout<<"input your photo path!"<<endl;
+            string o;cin>>o;
+            photo.push_photo(o);
+            break;
+        }    
+        case 8:{
+            photo.pop_photo();
+            break;
+        }       
+        case 9:{
+            cout<<"input your photo id!"<<endl;
+            int o;cin>>o;
+            photo.change_set0(o-1);
+            break;
+        }       
+        case 10:{
+            return;
+            break;
+        }       
+        default:{
+            Error_output();
+            break;
+        }    
+    }
+}
+void Msetting (const int& mopt)
+{
+    switch (mopt){
+        case 1:{
+            cout<<"input your photo id!"<<endl;
+            int o;cin>>o;
+            music.turn_on(o-1);
+            break;
+        }
+        case 2:{
+            music.turn_off();
+            break;
+        }
+        case 3:{
+           music.last();
+            break;
+        }
+        case 4:{
+            music.next();
+            break;
+        }
+        case 5:{
+            music.show();
+            break;
+        }
+        case 6:{
+            cout<<"input your photo id!"<<endl;
+            int o;cin>>o;
+            music.change_to(o-1);
+            break;
+        }
+        case 7:{
+            cout<<"input your photo path!"<<endl;
+            string o;cin>>o;
+            music.push_music(o);
+            break;
+        }    
+        case 8:{
+            music.pop_music();
+            break;
+        }       
+        case 9:{
+            cout<<"input your photo id!"<<endl;
+            int o;cin>>o;
+            music.change_set0(o-1);
+            break;
+        }              
+        case 10:{
+            return;
+            break;
+        }
+        default:{
+            Error_output();
+            break;
+        }    
+    }
+}
+int main(void) {
+    do
+    {
+        menu_print();
+        cin>>opt;
+        switch (opt){
+            case 1:{
+                goto Game_start;
+                break;
+            }
+            case 2:{
+                do
+                {
+                    Photo_print();
+                    cin>>popt;
+                    Psetting(popt);
+                }while(popt!=10);
+                break;
+            }
+            case 3:{
+                do
+                {
+                    Music_print();
+                    cin>>mopt;
+                    Msetting(mopt);
+                }while (mopt!=10);
+                break;
+            }
+            default:{
+                Error_output();
+                break;
+            }
+        }
+    } while(opt!=1);
+
+    Game_start:;
     //实例化窗口，刷新率60hz
     RenderWindow window(VideoMode({1300, 800}), "My window");
     window.setFramerateLimit(60); 
     
-    Texture photo("./T1.jpg");
 
     RectangleShape Board({800.f, 800.f});
     Board.setPosition({0,0});
-    Board.setTexture(&photo);
+    Board.setTexture(&photo.get_Texture());
     
     //侧栏
     RectangleShape SecBoard({500.f,800.f});
@@ -61,46 +250,37 @@ int main(void) {
     setlines();
 
 
-    music.push_music("./test0.mp3");
-    music.show();
-    string music_path=music.get_Path(0);
-    cout<<music_path<<endl;
-    music.turn_on(music_path,0);
-
+    function<void()> Gamers_draw=[&]()->void
+    {
+        window.draw(Gamer1.get_shape());
+        window.draw(Gamer1.get_text());
+        window.draw(Rank1.get_shape());
+        window.draw(Rank1.get_text());
+        window.draw(Gamer2.get_shape());
+        window.draw(Gamer2.get_text());
+        window.draw(Rank2.get_shape());
+        window.draw(Rank2.get_text());
+    };
     //窗口的展示
     while (window.isOpen())
     {
-        while (const std::optional event = window.pollEvent())
+        while (const auto event = window.pollEvent())
         {
+            if(Gamer1.handleEvent(event,window))
+                Gamer1.update();
+            if(Gamer2.handleEvent(event,window))
+                Gamer2.update();
             if (event->is<Event::Closed>())
                 window.close();
         }
-        if (Mouse::isButtonPressed(Mouse::Button::Left)) {
-            Vector2i mousePos = Mouse::getPosition(window);
-            int x = mousePos.x;
-            int y = mousePos.y;
-            // cout<<x<<' '<<y<<endl;
-        }
+        Gamer1.update();
+        Gamer2.update();
         window.clear(Color::Black);
         window.draw(Board);
         window.draw(SecBoard);
         window.draw(ys);
         window.draw(xs);
-        function<void()> Gamers=[&]()->void
-        {
-            window.draw(Gamer1.get_shape());
-            window.draw(Gamer1.get_text());
-            window.draw(Rank1.get_shape());
-            window.draw(Rank1.get_text());
-            window.draw(Gamer2.get_shape());
-            window.draw(Gamer2.get_text());
-            window.draw(Rank2.get_shape());
-            window.draw(Rank2.get_text());
-        };
-        Gamers();
-
-
-
+        Gamers_draw();
         window.display();
     }
     music.turn_off();
