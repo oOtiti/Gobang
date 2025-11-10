@@ -3,8 +3,8 @@
 #include "Music.h"
 #include "Photo.h"
 #include "Piece.h"
-#include "Button.h"
 #include <vector>
+#include "Button.h"
 #include <functional>
 #include "Chessboard.h"
 #include <SFML/Window.hpp>
