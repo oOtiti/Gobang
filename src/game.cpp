@@ -270,6 +270,7 @@ int main(void) {
                 Gamer1.update();
             if(Gamer2.handleEvent(event,window))
                 Gamer2.update();
+            if(event->is<Event::MouseMoved>())
             if (event->is<Event::Closed>())
                 window.close();
         }

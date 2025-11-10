@@ -55,9 +55,9 @@ const sf::Text& Button :: get_text () const {
 }
 
 bool Button :: isMouseOver(const sf::RenderWindow& window) {
-        sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-        return this->shape.getGlobalBounds().contains(mousePos);
-    }
+    sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+    return this->shape.getGlobalBounds().contains(mousePos);
+}
 
 bool Button::handleEvent(const std::optional<sf::Event>& event, const sf::RenderWindow& window) {
     if (event->is<sf::Event::MouseMoved>()) {
