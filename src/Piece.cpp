@@ -3,7 +3,9 @@
 Piece :: Piece (sf::Color _c , int _x , int _y, int _id, bool _h, sf::CircleShape _s) 
     : color(_c) , x(_x) ,y(_y) , id(_id) ,highlight(_h), shape(_s) {
         this->shape.setFillColor(_c);
+        this->shape.setOrigin(sf::Vector2f{20.f,20.f});
         this->shape.setPosition(sf::Vector2f((float)_x,(float)_y));
+        this->shape.setFillColor(_c);
     };
 
 void Piece :: set_key () {

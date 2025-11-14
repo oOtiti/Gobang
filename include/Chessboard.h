@@ -17,7 +17,6 @@ public:
     Chessboard(int _width=100, int _height=100 ,int _step=0, bool _status=0, std :: vector<std :: vector<int>> _board=std :: vector<std :: vector<int>>(10,std ::vector<int>()), std :: vector<Piece> _pieces=std ::vector<Piece>());
     void ban();                                                     //封盘
     void unban();                                                   //开盘
-    void add_step();                                                //增加
     void inplace(const Piece&);                                     //放棋子  
     const int& get_step() const;                                    //获取
     void init(const int&,const int&);                               //初始化

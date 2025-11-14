@@ -13,12 +13,12 @@
 using namespace sf;
 using namespace std;
 int opt,popt,mopt,win;
+sf::Color darkBrown(205,133,63); 
 Music music;
 Photo photo;
 Chessboard chessboard;
 Button Gamer1(800,0,500,100,"Gamer1 name :",sf::Color::White,"./arial.ttf"),Gamer2(800,225,500,100,"Gamer2 name :",sf::Color::White,"./arial.ttf");
 Button Rank1(800,100,500,50,"Rank:0",sf::Color::White,"./arial.ttf"),Rank2(800,175,500,50,"Rank:0",sf::Color::White,"./arial.ttf");
-Button winboard(200,200,400,400,"WIN",sf::Color::White,"./arial.ttf");
 void menu_print()
 {
     cout << "Welcome to Gobang Game!" << endl;
@@ -220,13 +220,24 @@ int main(void) {
     RectangleShape Board({800.f, 800.f});
     Board.setPosition({0,0});
     Board.setTexture(&photo.get_Texture());
-    Board.setFillColor(Color::Blue);
+    Board.setFillColor(darkBrown);
     
     //侧栏
     RectangleShape SecBoard({500.f,800.f});
     SecBoard.setPosition({800.f,0.f});
     SecBoard.setFillColor(Color::White);
 
+    //win
+    RectangleShape winboard({800.f,800.f});
+    winboard.setPosition({0.f,0.f});
+    winboard.setTexture(&photo.get_Texture());
+    Font font;
+    if(!font.openFromFile("./arial.ttf"))
+        cout<<"DEFULT FONT MISTAKE!"<<endl;
+    Text wintest(font);
+    wintest.setString("TANK YOU FOR YOUR PLAYING! \n     GAME OVER!");
+    wintest.setPosition(Vector2f{350.f,350.f});
+    wintest.setFillColor(Color::Black);
 
     //棋盘的框架按照800*800制作
     sf::VertexArray ys(sf::PrimitiveType::Lines,4*8);
@@ -239,6 +250,8 @@ int main(void) {
         {
             ys[i].position=sf:: Vector2f(x1,y1);
             ys[i+1].position=sf:: Vector2f(x2,y2);
+            ys[i].color=Color::Black;
+            ys[i+1].color=Color::Black;
             y1+=50,y2+=50;
         }
         x1=0.0,y1=0.0;
@@ -247,6 +260,8 @@ int main(void) {
         {
             xs[i].position=sf:: Vector2f(x1,y1);
             xs[i+1].position=sf:: Vector2f(x2,y2);
+            xs[i].color=Color::Black;
+            xs[i+1].color=Color::Black;
             x1+=50,x2+=50;
         }
     };
@@ -255,18 +270,21 @@ int main(void) {
 
     function<void()> Gamers_draw=[&]()->void
     {
-        window.draw(Gamer1.get_shape());
-        window.draw(Gamer1.get_text());
-        window.draw(Rank1.get_shape());
-        window.draw(Rank1.get_text());
-        window.draw(Gamer2.get_shape());
-        window.draw(Gamer2.get_text());
-        window.draw(Rank2.get_shape());
-        window.draw(Rank2.get_text());
         if(win)
         {
-            window.draw(winboard.get_shape());
-            window.draw(winboard.get_text());
+            window.draw(winboard);
+            window.draw(wintest);
+        }
+        else
+        {
+            window.draw(Gamer1.get_shape());
+            window.draw(Gamer1.get_text());
+            window.draw(Rank1.get_shape());
+            window.draw(Rank1.get_text());
+            window.draw(Gamer2.get_shape());
+            window.draw(Gamer2.get_text());
+            window.draw(Rank2.get_shape());
+            window.draw(Rank2.get_text());
         }
     };
     function<pair<int,int>(Vector2f)> make_min=[&](Vector2f pos)->pair<int,int>
@@ -278,7 +296,7 @@ int main(void) {
         if(posx-mid*50>=25) x++;
         mid=posy/50; y=mid;
         if(posy-mid*50>=25) y++;
-        return make_pair(x,y);
+        return make_pair(x*50,y*50);
     };
     function<void()> Piece_draw=[&]()->void
     {
@@ -294,25 +312,20 @@ int main(void) {
                 Gamer1.update();
             if(Gamer2.handleEvent(event,window))
                 Gamer2.update();
-            if(event->is<Event::MouseMoved>())
+            if(event->is<Event::MouseButtonReleased>()&&event->getIf<Event::MouseButtonReleased>()->button==Mouse::Button::Left)
             {
-                if(event->getIf<Event::MouseButtonReleased>()->button==Mouse::Button::Left)
+                Vector2f mousepos= window.mapPixelToCoords(Mouse::getPosition(window));
+                auto pp=make_min(mousepos);
+                if(Board.getGlobalBounds().contains(mousepos))
                 {
-                    Vector2f mousepos= window.mapPixelToCoords(Mouse::getPosition(window));
-                    if(Board.getGlobalBounds().contains(mousepos))
-                    {
-                        auto pp=make_min(mousepos);
-                        cout<<pp.first<<' '<<pp.second<<endl;
-                        Color color =sf::Color::Black;
-                        if(chessboard.get_step()&1) color=sf::Color::White;
-                        Piece mid (color,pp.first*50,pp.second*50,chessboard.get_step(),0);
-                        if(chessboard.check_xy(mid)&&!chessboard.had_piece(mid))
-                        {   cout<<100000<<endl;chessboard.inplace(mid),chessboard.add_step();}
-                        if(chessboard.check_win(mid))
-                            win=true;
-                    }
+                    Color color =sf::Color::Black;
+                    if(chessboard.get_step()&1) color=sf::Color::White;
+                    Piece mid (color,pp.first,pp.second,chessboard.get_step(),0);
+                    if(chessboard.check_xy(mid)&&!chessboard.had_piece(mid))
+                        chessboard.inplace(mid);
+                    if(chessboard.check_win(mid))
+                        win=true;
                 }
-  
             }
             if (event->is<Event::Closed>())
                 window.close();
@@ -325,7 +338,8 @@ int main(void) {
         window.draw(ys);
         window.draw(xs);
         Gamers_draw();
-        Piece_draw();
+        if(!win)
+            Piece_draw();
         window.display();
     }
     music.turn_off();

@@ -37,28 +37,28 @@ const bool Chessboard :: check_win (const Piece& piece) const {
    
     //y 
     int cnt=1;
-    for(int i=y+1;i<this->width;i++)
+    for(int i=y+1;i<this->height;i++)
     {
-        if(!board[x][i] || this->pieces[board[x][i]].get_color() !=color) {break;}
+        if(!board[x][i] || this->pieces[board[x][i]-1].get_color() !=color) {break;}
         cnt++;
     }
     for(int i=y-1;i>=0;i--)
     {
-        if(!board[x][i] || this->pieces[board[x][i]].get_color() !=color) {break;}
+        if(!board[x][i] || this->pieces[board[x][i]-1].get_color() !=color) {break;}
         cnt++;
     }
     if(cnt>=5) return true;
 
     //x
     cnt=1;
-    for(int i=x+1;i<this->height;i++)
+    for(int i=x+1;i<this->width;i++)
     {
-        if(!board[i][y] || this->pieces[board[i][y]].get_color() !=color) {break;}
+        if(!board[i][y] || this->pieces[board[i][y]-1].get_color() !=color) {break;}
         cnt++;
     }
     for(int i=x-1;i>=0;i--)
     {
-        if(!board[i][y] || this->pieces[board[i][y]].get_color() !=color) {break;}
+        if(!board[i][y] || this->pieces[board[i][y]-1].get_color() !=color) {break;}
         cnt++;
     }
     if(cnt>=5) return true;
@@ -66,16 +66,16 @@ const bool Chessboard :: check_win (const Piece& piece) const {
     //left up
     cnt=1;
     int nx=x-1,ny=y-1;
-    while(nx>=0&&ny>=0&&!board[nx][ny])
+    while(nx>=0&&ny>=0)
     {
-        if(this->pieces[board[nx][ny]].get_color()!=color) break;
+        if(!board[nx][ny] ||this->pieces[board[nx][ny]-1].get_color()!=color) break;
         cnt++;
         nx--;ny--;
     }
     nx=x+1,ny=y+1;
-    while(nx<this->height&& ny<this->width&&!board[nx][ny])
+    while(nx<this->width&& ny<this->height)
     {
-        if(this->pieces[board[nx][ny]].get_color()!=color) break;
+        if(!board[nx][ny] ||this->pieces[board[nx][ny]-1].get_color()!=color) break;
         cnt++;
         nx++;ny++;
     }
@@ -84,16 +84,16 @@ const bool Chessboard :: check_win (const Piece& piece) const {
     //right up
     cnt=1;
     nx=x-1,ny=y+1;
-    while(nx>=0&&ny<this->width&&!board[nx][ny])
+    while(nx>=0&&ny<this->height)
     {
-        if(this->pieces[board[nx][ny]].get_color()!=color) break;
+        if(!board[nx][ny] || this->pieces[board[nx][ny]-1].get_color()!=color) break;
         cnt++;
         nx--;ny++;
     }
     nx=x+1,ny=y-1;
-    while(nx<this->height&&ny>=0&&!board[nx][ny])
+    while(nx<this->width&&ny>=0)
     {
-        if(this->pieces[board[nx][ny]].get_color()!=color) break;
+        if(!board[nx][ny] || this->pieces[board[nx][ny]-1].get_color()!=color) break;
         cnt++;
         nx++;ny--;
     }
@@ -120,12 +120,9 @@ const int& Chessboard :: get_step () const {
     return this->step;
 }
 
-void Chessboard :: add_step () {
-    this->step++;
-}
 
 const bool Chessboard :: had_piece (const Piece& p) const {
-    return this->board[p.get_x()][p.get_y()];
+    return this->board[p.get_x()/50][p.get_y()/50];
 }
 
 const std :: vector<Piece>& Chessboard :: get_Pieces() const {
