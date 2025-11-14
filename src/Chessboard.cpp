@@ -23,17 +23,17 @@ void Chessboard :: unban () {
 }
 
 const bool Chessboard :: check_xy (const Piece& piece) const{
-    int x=piece.get_x();
-    int y=piece.get_y();
+    int x=piece.get_x()/50;
+    int y=piece.get_y()/50;
 
     if(x<0 || x>this->height || y<0 || y>this->width) return false;
     return true;
 }
 
 const bool Chessboard :: check_win (const Piece& piece) const {
-    int x=piece.get_x();
-    int y=piece.get_y();
-    std :: string color=piece.get_color();
+    int x=piece.get_x()/50;
+    int y=piece.get_y()/50;
+    sf :: Color color=piece.get_color();
    
     //y 
     int cnt=1;
@@ -103,8 +103,8 @@ const bool Chessboard :: check_win (const Piece& piece) const {
 }
 
 void Chessboard :: inplace (const Piece& piece) {
-    int x=piece.get_x();
-    int y=piece.get_y();
+    int x=piece.get_x()/50;
+    int y=piece.get_y()/50;
 
     if(this ->check_xy(piece))
     {
@@ -114,4 +114,20 @@ void Chessboard :: inplace (const Piece& piece) {
     }
     else 
         std :: cout<< "OUT OF BOARD!"<<std ::endl;
+}
+
+const int& Chessboard :: get_step () const {
+    return this->step;
+}
+
+void Chessboard :: add_step () {
+    this->step++;
+}
+
+const bool Chessboard :: had_piece (const Piece& p) const {
+    return this->board[p.get_x()][p.get_y()];
+}
+
+const std :: vector<Piece>& Chessboard :: get_Pieces() const {
+    return this->pieces;
 }

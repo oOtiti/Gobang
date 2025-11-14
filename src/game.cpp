@@ -12,12 +12,13 @@
 #include <SFML/Graphics/PrimitiveType.hpp>
 using namespace sf;
 using namespace std;
-int opt,popt,mopt;
+int opt,popt,mopt,win;
 Music music;
 Photo photo;
 Chessboard chessboard;
 Button Gamer1(800,0,500,100,"Gamer1 name :",sf::Color::White,"./arial.ttf"),Gamer2(800,225,500,100,"Gamer2 name :",sf::Color::White,"./arial.ttf");
 Button Rank1(800,100,500,50,"Rank:0",sf::Color::White,"./arial.ttf"),Rank2(800,175,500,50,"Rank:0",sf::Color::White,"./arial.ttf");
+Button winboard(200,200,400,400,"WIN",sf::Color::White,"./arial.ttf");
 void menu_print()
 {
     cout << "Welcome to Gobang Game!" << endl;
@@ -210,14 +211,16 @@ int main(void) {
     } while(opt!=1);
 
     Game_start:;
+    chessboard.init(50,50);
     //实例化窗口，刷新率60hz
     RenderWindow window(VideoMode({1300, 800}), "My window");
     window.setFramerateLimit(60); 
     
-
+    //棋盘
     RectangleShape Board({800.f, 800.f});
     Board.setPosition({0,0});
     Board.setTexture(&photo.get_Texture());
+    Board.setFillColor(Color::Blue);
     
     //侧栏
     RectangleShape SecBoard({500.f,800.f});
@@ -260,6 +263,27 @@ int main(void) {
         window.draw(Gamer2.get_text());
         window.draw(Rank2.get_shape());
         window.draw(Rank2.get_text());
+        if(win)
+        {
+            window.draw(winboard.get_shape());
+            window.draw(winboard.get_text());
+        }
+    };
+    function<pair<int,int>(Vector2f)> make_min=[&](Vector2f pos)->pair<int,int>
+    {
+        int x=0,y=0;
+        int posx=(int)pos.x;
+        int posy=(int)pos.y;
+        int mid=posx/50; x=mid;
+        if(posx-mid*50>=25) x++;
+        mid=posy/50; y=mid;
+        if(posy-mid*50>=25) y++;
+        return make_pair(x,y);
+    };
+    function<void()> Piece_draw=[&]()->void
+    {
+        vector<Piece> tmp=chessboard.get_Pieces();
+        for(auto i : tmp) window.draw(i.get_shape());
     };
     //窗口的展示
     while (window.isOpen())
@@ -271,6 +295,25 @@ int main(void) {
             if(Gamer2.handleEvent(event,window))
                 Gamer2.update();
             if(event->is<Event::MouseMoved>())
+            {
+                if(event->getIf<Event::MouseButtonReleased>()->button==Mouse::Button::Left)
+                {
+                    Vector2f mousepos= window.mapPixelToCoords(Mouse::getPosition(window));
+                    if(Board.getGlobalBounds().contains(mousepos))
+                    {
+                        auto pp=make_min(mousepos);
+                        cout<<pp.first<<' '<<pp.second<<endl;
+                        Color color =sf::Color::Black;
+                        if(chessboard.get_step()&1) color=sf::Color::White;
+                        Piece mid (color,pp.first*50,pp.second*50,chessboard.get_step(),0);
+                        if(chessboard.check_xy(mid)&&!chessboard.had_piece(mid))
+                        {   cout<<100000<<endl;chessboard.inplace(mid),chessboard.add_step();}
+                        if(chessboard.check_win(mid))
+                            win=true;
+                    }
+                }
+  
+            }
             if (event->is<Event::Closed>())
                 window.close();
         }
@@ -282,6 +325,7 @@ int main(void) {
         window.draw(ys);
         window.draw(xs);
         Gamers_draw();
+        Piece_draw();
         window.display();
     }
     music.turn_off();
