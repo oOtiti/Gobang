@@ -43,5 +43,5 @@ CPP文件：
 
 项目中用的window的系统调用和SFML的使用为自学，不规范见谅。
 部署编译项目必要：
-1.添加SFML库(可用vcpkg) CMakePresets.json已添加
+1.添加SFML库(可用vcpkg) CMakePresets.json已添加，也可以用vcpkg本身，已经写好json文件
 2.CMAKE
